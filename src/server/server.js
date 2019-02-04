@@ -68,7 +68,7 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/postNode", (req, res) => {
-  let newNode = new Node(req.body);
+  let newNode = new Node({...req.body, data: {updated: 0}});
 
   newNode.save(function(err) {
     if (err) return res.send(err);
