@@ -73,7 +73,7 @@ app.get("/getNode/:id", (req, res) => {
     if (err) return console.log(err);
     let now = Date.now();
     let status = false;
-    if (now - node._doc.data.updated < 10000) status = true;
+    if (now - node._doc.data.updated < 30000) status = true;
     res.send({ ...node._doc, online: status });
   });
 });
