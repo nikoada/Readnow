@@ -46,14 +46,14 @@ app.use(cors(corsOptions));
 //     next();
 // });
 
-// app.use( express.static( `${__dirname}/../../build` ) );
-//
-// const path = require('path')
-// app.get('/', (req, res)=>{
-//   res.sendFile(path.join(__dirname, '../../build/index.html'));
-// })
+ app.use( express.static( `${__dirname}/../../build` ) );
 
-app.set("view engine", "ejs");
+ const path = require('path')
+ app.get('/', (req, res)=>{
+   res.sendFile(path.join(__dirname, '../../build/index.html'));
+ })
+
+// app.set("view engine", "ejs");
 
 
 // Connecting to mongodb
@@ -96,8 +96,8 @@ app.post("/login", (req, res) => {
   });
 });
 
-app.post("/postNode", (req, res) => {
-  let newNode = new Node({...req.body, data: {updated: 0}});
+app.put("/postNode", (req, res) => {
+  let newNode = new Node({ ...req.body, data: {updated: Date.now() }});
 
   newNode.save(function(err) {
     if (err) return res.send(err);
