@@ -22,7 +22,7 @@ That’s it, no need to register.
 
 ![](screenshots/Screenshot_node_with_value_Readnow.png)
 
-Now when everything is seted up, you can test and send values to your node like so:
+Now when everything is seted up, you can test and send values to your node directly from your browser address bar like so:
 http://readnow.vulkanclub.tech/postValue?id=YOUR_PASSWORD&value1=YOUR_FIRST_VALUE&value2=YOUR_SECOND_VALUE&value3=YOUR_THIRD_VALUE
 
 for previouse example it would look like:
