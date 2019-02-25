@@ -16,11 +16,12 @@ export default class NodeElement extends Component {
   async getDataFromServer() {
     try {
       const response = await axios.get(
-        "http://localhost:8000/getNode/" + this.state.nodeData._id,
+        "http://readnow.vulkanclub.tech/getNode/" + this.state.nodeData._id,
         {
           crossdomain: true
         }
       );
+      console.log(response);
       this.setState({
         serverData: this.shapeState(response.data),
         online: response.data.online,

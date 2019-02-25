@@ -10,7 +10,7 @@ export default class Navigation extends Component {
 
   getDataFromServer = async () => {
     try {
-      const response = await axios("http://localhost:8000/login", {
+      const response = await axios("http://readnow.vulkanclub.tech/login", {
         method: "post",
         data: { id: this.state._id },
         withCredentials: true,
@@ -25,7 +25,7 @@ export default class Navigation extends Component {
 
   logOutFromServer = async () => {
     try {
-      await axios("http://localhost:8000/logout", {
+      await axios("http://readnow.vulkanclub.tech/logout", {
         method: "post",
         withCredentials: true,
         crossdomain: true

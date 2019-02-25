@@ -27,9 +27,38 @@ app.use(
 
 app.use(cors(corsOptions));
 
+app.use(function (req, res, next) {
+
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
+
+// app.use( express.static( `${__dirname}/../../build` ) );
+//
+// const path = require('path')
+// app.get('/', (req, res)=>{
+//   res.sendFile(path.join(__dirname, '../../build/index.html'));
+// })
+
+app.set("view engine", "ejs");
+
+
 // Connecting to mongodb
 mongoose.connect(
-    "mongodb://localhost:27017/nodelist",
+    "mongodb://138.197.182.5:27017/nodelist",
     { useNewUrlParser: true }
   )
   .then(() => console.log("MongoDB Connected..."))
@@ -94,7 +123,7 @@ app.get("/postValue", (req, res) => {
 app.post("/postValue", (req, res) => {
   Node.findByIdAndUpdate(
     req.body.id,
-    { $set: { data: req.body.data } },
+    { $set: { data: {...req.body.data, updated: Date.now() } } },
     { new: true },
     function(err, node) {
       if (err) return res.send(err);
@@ -108,4 +137,9 @@ app.post("/logout", (req, res) => {
   res.send({ err: 0, message: "you successfully loged out" });
 });
 
-app.listen(8000, () => console.log("app listening on port 8000"));
+app.get("/ereader", (req, res) => {
+  res.render("index", { values: 42 });
+})
+
+let port = process.env.PORT || 8080;
+app.listen(port, () => console.log(`app listening on port ${port}`));

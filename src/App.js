@@ -12,18 +12,18 @@ class App extends Component {
   };
 
   getData = async () => {
-    try {
-      const result = await axios.get("http://localhost:8000/getNode");
-      console.log(result.data);
+    // try {
+    //   const result = await axios.get("http://localhost:8000/getNode");
+    //   console.log(result.data);
       // if (result.data) {
       //   this.setState({
       //     parameters: result.data,
       //     requestDone: true
       //   });
       // }
-    } catch (err) {
-      console.log("Error: " + err);
-    }
+    // } catch (err) {
+    //   console.log("Error: " + err);
+    // }
   };
 
   componentDidMount() {

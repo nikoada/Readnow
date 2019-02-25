@@ -17,13 +17,14 @@ class CreateNode extends React.Component {
       this.setState({ pos1param: {...this.state.pos1param, ext: event.target.value} })
     }
     placeholder="ext"
+    maxlength="3"
   />
 </div>]
   };
 
   createNodeOnServerAndGetIt = async () => {
     let { inputs, ...clone} = this.state
-    const result = await axios("http://localhost:8000/postNode", {
+    const result = await axios("http://readnow.vulkanclub.tech/postNode", {
       method: "post",
       data: { ...clone },
       withCredentials: true
