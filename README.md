@@ -38,3 +38,6 @@ Proper way to update a value would be to make a PUT requiest on http://readnow.v
         "value3": 277
     }
 }
+
+Project page checks in every 5 seconds if there are new values.
+If values were not update in at least every 10 seconds, status will be off (device is offline). In future this and other options will be able for user to set.
