@@ -3,8 +3,10 @@ Probably the easyest way to go online with your IoT
 
 On Readnow you would be able to create your individual page, where you can send and display data easily. This can be done with HTTP requests, both with POST(recomended) but also with GET for quick test (if that is the only way).
 
+Project is online and runs in a test mode at the moment.
+
 live demo:
-https://github.com/nikoada/Readnow-1.0
+http://readnow.vulkanclub.tech
 
 
 How to use:
@@ -38,3 +40,6 @@ Proper way to update a value would be to make a PUT requiest on http://readnow.v
         "value3": 277
     }
 }
+
+Project page checks in every 5 seconds if there are new values.
+If values were not update in at least every 10 seconds, status will be off (device is offline). In future this and other options will be able for user to set.
