@@ -1,2 +1,32 @@
-<!DOCTYPE html><html lang="en" dir="ltr">  <head>    <meta charset="utf-8">    <title></title>  </head>  <body>    <h2 style="color: red;">here we go <%=values%> </h2>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="./socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div><%- initialContent -%></div>
+
+  <ul>
+
+  </ul>
+
+<script>
+  var insertQuestion = function (value) {
+  var newQuestion = document.createElement('li');
+  newQuestion.innerHTML = value;
+
+  var values = document.getElementsByTagName('ul')[0];
+  return values.appendChild(newQuestion);
+  }
+
+  // use the socket.io server to connect to localhost:8080 here
+  let server = io.connect('http://localhost:8080');
+
+  server.on('question', data => {
+    insertQuestion(data);
+    console.log(data);
+  });
+</script>
   </body></html>
