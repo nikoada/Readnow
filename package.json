@@ -7,6 +7,7 @@
     "axios": "^0.18.0",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.5",
+    "ejs": "^2.6.1",
     "eslint-config-react-app": "^3.0.6",
     "express-session": "^1.15.6",
     "mongoose": "^5.3.15",
@@ -23,7 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start-prod":"NODE_ENV=production pm2 start build/server.js -i max"
+    "start-prod": "NODE_ENV=production pm2 start build/server.js -i max"
   },
   "eslintConfig": {
     "extends": "react-app"

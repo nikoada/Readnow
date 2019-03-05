@@ -53,7 +53,7 @@ app.use(cors(corsOptions));
    res.sendFile(path.join(__dirname, '../../build/index.html'));
  })
 
-// app.set("view engine", "ejs");
+ app.set("view engine", "ejs");
 
 
 // Connecting to mongodb
