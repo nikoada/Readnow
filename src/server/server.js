@@ -1,20 +1,9 @@
 const express = require('express')
-
 const app = express()
-
 const session = require('express-session')
 const cors = require('cors')
-const mongoose = require('mongoose')
-const Node = require('./nodeModel')
-
 const server = require('http').createServer(app)
-const io = require('socket.io')(server)
-
-io.on('connection', function (client) {
-  setInterval(() => client.emit('value', 'Hello'), 2000)
-
-  console.log('Client connected...')
-})
+const fs = require('fs')
 
 const corsOptions = {
   origin: 'http://localhost:3000',
@@ -37,26 +26,14 @@ app.use(
 
 app.use(cors(corsOptions))
 
-app.use(express.static(`${__dirname}/../../build`))
-
-const path = require('path')
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../build/index.html'))
-})
+// app.use(express.static(`${__dirname}/../../build`))
+//
+// const path = require('path')
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../../build/index.html'))
+// })
 
 app.set('view engine', 'ejs')
-
-// Connecting to mongodb
-mongoose.connect(
-  'mongodb://138.197.182.5:27017/nodelist',
-  { useNewUrlParser: true }
-)
-  .then(() => console.log('MongoDB Connected...'))
-  .catch(err => console.log(err))
-
-app.get('/', (req, res) => {
-  return res.send({ version: '1' })
-})
 
 app.get('/getNode/:id', (req, res) => {
   Node.findById(req.params.id, function (err, node) {
@@ -69,26 +46,41 @@ app.get('/getNode/:id', (req, res) => {
 })
 
 app.get('/getNode', (req, res) => {
-  console.log(req.session)
-  Node.findById(req.session.user, function (err, node) {
-    if (err) return res.send({ err: err })
-    return res.send({ message: req.session })
-  })
+  // console.log(req.session)
+  // Node.findById(req.session.user, function (err, node) {
+  //   if (err) return res.send({ err: err })
+  //   return res.send({ message: req.session })
+  // })
 })
 
 app.post('/login', (req, res) => {
   console.log(req.body)
-  Node.findById(req.body.id, function (err, node) {
-    if (err) return res.send({ err: err })
-    req.session.user = req.body.id
-    console.log(req.session)
-    res.send(node)
+  const obj = {
+    node: []
+  }
+
+  obj.node.push({ id: req.body.id })
+  const json = JSON.stringify(obj)
+  fs.appendFile('jsonDB.json', json, 'utf8', (error) => {
+    if (error){
+      res.send({ error : error })
+      throw new Error({ error: 1, message: 'Could not add id' })
+    }
+    res.send({ message: obj })
   })
+
+  // console.log(req.body)
+  // Node.findById(req.body.id, function (err, node) {
+  //   if (err) return res.send({ err: err })
+  //   req.session.user = req.body.id
+  //   console.log(req.session)
+  //   res.send(node)
+  // })
 })
 
 app.put('/postNode', (req, res) => {
   let newNode = new Node({ ...req.body, data: { updated: Date.now() } })
-
+  console.log('we are reaching here!')
   newNode.save(function (err) {
     if (err) return res.send(err)
     return res.send({ message: newNode })
