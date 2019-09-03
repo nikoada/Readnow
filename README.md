@@ -5,10 +5,6 @@ On Readnow you would be able to create your individual page, where you can send 
 
 Project is online and runs in a test mode at the moment.
 
-live demo:
-http://readnow.vulkanclub.tech
-
-
 How to use:
 
 ![](screenshots/Screenshot_mainpage_Readnow.png)
