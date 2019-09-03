@@ -3,8 +3,6 @@ Probably the easyest way to go online with your IoT
 
 On Readnow you would be able to create your individual page, where you can send and display data easily. This can be done with HTTP requests, both with POST(recomended) but also with GET for quick test (if that is the only way).
 
-Project is online and runs in a test mode at the moment.
-
 How to use:
 
 ![](screenshots/Screenshot_mainpage_Readnow.png)
