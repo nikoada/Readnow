@@ -4,6 +4,8 @@ const session = require('express-session')
 const cors = require('cors')
 const server = require('http').createServer(app)
 const fs = require('fs')
+const randomstring = require('randomstring')
+
 
 const corsOptions = {
   origin: 'http://localhost:3000',
@@ -36,91 +38,42 @@ app.use(cors(corsOptions))
 app.set('view engine', 'ejs')
 
 app.get('/getNode/:id', (req, res) => {
-  Node.findById(req.params.id, function (err, node) {
-    if (err) return console.log(err)
+  if (!fs.existsSync(`./src/server/nodes/${req.params.id}.json`)) return res.send({ message: `can't find the node with id: ${req.body.id} ` })
+  fs.readFile(`./src/server/nodes/${req.params.id}.json`, (err, data) => {
+    if (err) res.send({ error: err, message: 'can\'t find the node' })
+    const content = JSON.parse(data)
     let now = Date.now()
     let status = false
-    if (now - node._doc.data.updated < 30000) status = true
-    res.send({ ...node._doc, online: status })
+    if (now - content.updated < 30000) status = true
+    res.send({ ...content, online: status })
   })
 })
 
-app.get('/getNode', (req, res) => {
-  // console.log(req.session)
-  // Node.findById(req.session.user, function (err, node) {
-  //   if (err) return res.send({ err: err })
-  //   return res.send({ message: req.session })
-  // })
-})
+app.post('/postNode', (req, res) => {
+  // here we add unique id to object and timestamp on creation
+  let newNode = { ...req.body, id: randomstring.generate(16), updated: Date.now() }
+  let json = JSON.stringify(newNode)
 
-app.post('/login', (req, res) => {
-  console.log(req.body)
-  const obj = {
-    node: []
-  }
-
-  obj.node.push({ id: req.body.id })
-  const json = JSON.stringify(obj)
-  fs.appendFile('jsonDB.json', json, 'utf8', (error) => {
-    if (error){
-      res.send({ error : error })
-      throw new Error({ error: 1, message: 'Could not add id' })
+  fs.writeFile(`./src/server/nodes/${newNode.id}.json`, json, 'utf8', (error) => {
+    if (error) {
+      res.send({ error: error, message: 'can\'t creat a node' })
     }
-    res.send({ message: obj })
+    res.send(newNode)
   })
-
-  // console.log(req.body)
-  // Node.findById(req.body.id, function (err, node) {
-  //   if (err) return res.send({ err: err })
-  //   req.session.user = req.body.id
-  //   console.log(req.session)
-  //   res.send(node)
-  // })
-})
-
-app.put('/postNode', (req, res) => {
-  let newNode = new Node({ ...req.body, data: { updated: Date.now() } })
-  console.log('we are reaching here!')
-  newNode.save(function (err) {
-    if (err) return res.send(err)
-    return res.send({ message: newNode })
-  })
-})
-
-// example: http://localhost:8000/postValue?id=5c320711e10b0f3ad4766807&value1=33&value2=44
-app.get('/postValue', (req, res) => {
-  console.log(req.query)
-  let { id, ...ValuesOnly } = req.query
-  Node.findByIdAndUpdate(
-    req.query.id,
-    { $set: { data: { ...ValuesOnly, updated: Date.now() } } },
-    { new: true },
-    function (err, node) {
-      if (err) return res.send(err)
-      res.send(node)
-    }
-  )
 })
 
 app.put('/postValue', (req, res) => {
-  Node.findByIdAndUpdate(
-    req.body.id,
-    { $set: { data: { ...req.body.data, updated: Date.now() } } },
-    { new: true },
-    function (err, node) {
-      if (err) return res.send(err)
-      res.send(node)
+  if (!fs.existsSync(`./src/server/nodes/${req.body.id}.json`)) return res.send({ message: `can't find the node with id: ${req.body.id} ` })
+  let nodeObj = req.body
+  nodeObj.updated = Date.now()
+  let json = JSON.stringify(nodeObj)
+  fs.writeFile(`./src/server/nodes/${req.body.id}.json`, json, 'utf8', (error) => {
+    if (error) {
+      res.send({ error: error, message: 'can\'t update a node' })
     }
-  )
-})
-
-app.post('/logout', (req, res) => {
-  req.session.destroy()
-  res.send({ err: 0, message: 'you successfully loged out' })
-})
-
-app.get('/ereader', (req, res) => {
-  res.render('index', { initialContent: 42 })
+    let { updated, ...rest } = nodeObj
+    res.send(rest)
+  })
 })
 
 let port = process.env.PORT || 8080
