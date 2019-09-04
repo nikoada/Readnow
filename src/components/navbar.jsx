@@ -5,18 +5,18 @@ import logo from "./Logo-readnow.svg"
 
 export default class Navigation extends Component {
   state = {
-    _id: null
+    id: null
   };
 
   getDataFromServer = async () => {
     try {
-      const response = await axios("http://readnow.vulkanclub.tech/login", {
-        method: "post",
-        data: { id: this.state._id },
-        withCredentials: true,
-        crossdomain: true
-      });
-      if (!response.data.err) this.props.passData(response.data);
+      const response = await axios.get(
+        "http://localhost:8080/getNode/" + this.state.id,
+        {
+          crossdomain: true
+        }
+      )
+      if (!response.data.err) this.props.passData({...response.data, requestDone: true});
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -41,18 +41,18 @@ export default class Navigation extends Component {
         <img style={Styles.logo} src={logo} alt="logo"/>
         {this.props.appState.parameters ? (
           <p style={Styles.paragraphNavbar}>
-            {this.props.appState.parameters._id}
+            {this.props.appState.parameters.id}
           </p>
         ) : (
           <input style={Styles.inputNavbar}
-            onChange={event => this.setState({ _id: event.target.value })}
+            onChange={event => this.setState({ id: event.target.value })}
             placeholder="----------------------------------"
           />
         )}
         {this.props.appState.parameters ? (
           <button style={Styles.buttonNavbar}
             onClick={() => {
-              this.setState({ _id: null });
+              this.setState({ id: null });
               this.props.passData(null);
               this.logOutFromServer();
             }}
