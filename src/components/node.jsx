@@ -16,7 +16,7 @@ export default class NodeElement extends Component {
   async getDataFromServer() {
     try {
       const response = await axios.get(
-        "http://localhost:8080/getNode/" + this.state.nodeData.id,
+        "http://readnow.vulkanclub.tech/getNode/" + this.state.nodeData.id,
         {
           crossdomain: true
         }

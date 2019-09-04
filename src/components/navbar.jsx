@@ -11,24 +11,12 @@ export default class Navigation extends Component {
   getDataFromServer = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8080/getNode/" + this.state.id,
+        "http://readnow.vulkanclub.tech/getNode/" + this.state.id,
         {
           crossdomain: true
         }
       )
       if (!response.data.err) this.props.passData({...response.data, requestDone: true});
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  logOutFromServer = async () => {
-    try {
-      await axios("http://readnow.vulkanclub.tech/logout", {
-        method: "post",
-        withCredentials: true,
-        crossdomain: true
-      });
     } catch (error) {
       console.log(error);
     }
@@ -53,7 +41,6 @@ export default class Navigation extends Component {
             onClick={() => {
               this.setState({ id: null });
               this.props.passData(null);
-              this.logOutFromServer();
             }}
           >
             Log out
