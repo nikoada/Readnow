@@ -61,7 +61,6 @@ class CreateNode extends React.Component {
   }
 
   render() {
-    console.log(this.state.inputsAmount)
     return (
       <div style={Styles.main}>
         <div style={Styles.titleContainer}>

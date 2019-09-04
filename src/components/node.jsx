@@ -14,7 +14,6 @@ export default class NodeElement extends Component {
   };
 
   async getDataFromServer() {
-    console.log('here we come', this.state.nodeData.id)
     try {
       const response = await axios.get(
         "http://localhost:8080/getNode/" + this.state.nodeData.id,
@@ -26,7 +25,6 @@ export default class NodeElement extends Component {
         serverData: response.data,
         online: response.data.online,
       });
-      console.log(this.state.serverData)
     } catch (error) {
       console.log(error);
     }

@@ -17,7 +17,6 @@ export default class Navigation extends Component {
         }
       )
       if (!response.data.err) this.props.passData({...response.data, requestDone: true});
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
