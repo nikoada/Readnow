@@ -16,38 +16,18 @@ export default class NodeElement extends Component {
   async getDataFromServer() {
     try {
       const response = await axios.get(
-        "http://readnow.vulkanclub.tech/getNode/" + this.state.nodeData._id,
+        "http://readnow.vulkanclub.tech/getNode/" + this.state.nodeData.id,
         {
           crossdomain: true
         }
-      );
-      console.log(response);
+      )
       this.setState({
-        serverData: this.shapeState(response.data),
+        serverData: response.data,
         online: response.data.online,
       });
-      console.log(this.state.serverData)
     } catch (error) {
       console.log(error);
     }
-  }
-
-  shapeState(gotDataParam) {
-    let positions = [];
-    let newObj = gotDataParam;
-
-    for (let key in newObj) {
-      if (key.includes("pos")) {
-        positions.push(key);
-      }
-    }
-
-    positions.sort();
-    positions.map(
-      (item, index) => (newObj[item].value = newObj.data["value" + (index + 1)])
-    );
-
-    return newObj;
   }
 
   componentDidMount() {

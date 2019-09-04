@@ -17,7 +17,7 @@ class CreateNode extends React.Component {
       this.setState({ pos1param: {...this.state.pos1param, ext: event.target.value} })
     }
     placeholder="ext"
-    maxlength="3"
+    maxLength="3"
   />
 </div>]
   };
@@ -29,8 +29,9 @@ class CreateNode extends React.Component {
       data: { ...clone },
       withCredentials: true
     });
-    console.log(result.data.message);
-    this.props.passData({...result.data.message, requestDone: true})
+    this.props.passData({...result.data, requestDone: true})
+    console.log(result.data)
+    return
   };
 
   increaseInput = () => {
@@ -60,7 +61,6 @@ class CreateNode extends React.Component {
   }
 
   render() {
-    console.log(this.state.inputsAmount)
     return (
       <div style={Styles.main}>
         <div style={Styles.titleContainer}>
