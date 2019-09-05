@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-const session = require('express-session')
 const cors = require('cors')
 const server = require('http').createServer(app)
 const fs = require('fs')
@@ -16,15 +15,6 @@ const corsOptions = {
 // Bodyparser
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
-// Session
-app.use(
-  session({
-    secret: 'SecretKey',
-    resave: true,
-    saveUninitialized: true
-  })
-)
 
 app.use(cors(corsOptions))
 
