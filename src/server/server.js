@@ -1,10 +1,9 @@
 const express = require('express')
 const app = express()
-const cors = require('cors')
 const server = require('http').createServer(app)
 const fs = require('fs')
 const randomstring = require('randomstring')
-
+const cors = require('cors')
 
 const corsOptions = {
   origin: 'http://localhost:3000',
@@ -32,7 +31,7 @@ app.get('/getNode/:id', (req, res) => {
   fs.readFile(`./src/server/nodes/${req.params.id}.json`, (err, data) => {
     if (err) res.send({ error: err, message: 'can\'t find the node' })
     const content = JSON.parse(data)
-    let now = Date.now()
+    const now = Date.now()
     let status = false
     if (now - content.updated < 30000) status = true
     res.send({ ...content, online: status })
@@ -41,8 +40,8 @@ app.get('/getNode/:id', (req, res) => {
 
 app.post('/postNode', (req, res) => {
   // here we add unique id to object and timestamp on creation
-  let newNode = { ...req.body, id: randomstring.generate(16), updated: Date.now() }
-  let json = JSON.stringify(newNode)
+  const newNode = { ...req.body, id: randomstring.generate(16), updated: Date.now() }
+  const json = JSON.stringify(newNode)
 
   fs.writeFile(`./src/server/nodes/${newNode.id}.json`, json, 'utf8', (error) => {
     if (error) {
@@ -54,17 +53,17 @@ app.post('/postNode', (req, res) => {
 
 app.put('/postValue', (req, res) => {
   if (!fs.existsSync(`./src/server/nodes/${req.body.id}.json`)) return res.send({ message: `can't find the node with id: ${req.body.id} ` })
-  let nodeObj = req.body
+  const nodeObj = req.body
   nodeObj.updated = Date.now()
-  let json = JSON.stringify(nodeObj)
+  const json = JSON.stringify(nodeObj)
   fs.writeFile(`./src/server/nodes/${req.body.id}.json`, json, 'utf8', (error) => {
     if (error) {
       res.send({ error: error, message: 'can\'t update a node' })
     }
-    let { updated, ...rest } = nodeObj
+    const { updated, ...rest } = nodeObj
     res.send(rest)
   })
 })
 
-let port = process.env.PORT || 8080
+const port = process.env.PORT || 8080
 server.listen(port, () => console.log(`app listening on port ${port}`))
