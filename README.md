@@ -12,28 +12,36 @@ Enter Title of your project. Add one or more parameters (like Temperature, humid
 
 ![](screenshots/Screenshot_nodeview_Readnow.png)
 
-You now created your project node. Your node was assigned a password wich you see on top right corner. Later you can use that password to log in into your node page, so copy and save it now please.
+You now created your project node. Your node was assigned a id wich you see on top right corner. Later you can use that id to log in into your node page, so copy and save it now please.
 That’s it, no need to register.
 
 
 ![](screenshots/Screenshot_node_with_value_Readnow.png)
 
-Now when everything is seted up, you can test and send values to your node directly from your browser address bar like so:
-http://readnow.vulkanclub.tech/postValue?id=YOUR_PASSWORD&value1=YOUR_FIRST_VALUE&value2=YOUR_SECOND_VALUE&value3=YOUR_THIRD_VALUE
-
-for previouse example it would look like:
-http://readnow.vulkanclub.tech/postValue?id=5c73c132610cc44e5e2cc062&value1=33&value2=44&value3=277
-
-
-Proper way to update a value would be to make a PUT requiest on http://readnow.vulkanclub.tech/postValue and send JSON like so:
+Now when everything is seted up, you can test and send values to your node using your id.
+Proper way to update a value would be to make a PUT (or POST) requiest on http://readnow.vulkanclub.tech/postValue and send JSON like so:
 {
-    "id": "5c73c132610cc44e5e2cc062",
-    "data": {
-        "value1": 33,
-        "value2": 44,
-        "value3": 277
-    }
+    "title": "Tunnel project",
+    "pos1param": {
+        "name": "Temperature",
+        "ext": "C",
+        "value": 33
+     },
+     "pos2param": {
+        "name": "Humidity",
+        "ext": "%",
+        "value": 44
+     },
+     "pos3param": {
+        "name": "Fan speed",
+        "ext": "rp",
+        "value": 277
+     },
+     "id": "5c73c132610cc44e5e2cc062"
 }
+
+With every request you can change title, names, extensions or even add or remove the whole entry (e.g. pos2param).
+You Can't change the password. It throws an error if you try.
 
 Project page checks in every 5 seconds if there are new values.
 If values were not update in at least every 10 seconds, status will be off (device is offline). In future this and other options will be able for user to set.
