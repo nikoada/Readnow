@@ -9,7 +9,7 @@ Coming soon:
 - webapp will be on https as soon as I get microcontroller which is able to send https requests. At the moment I'm testing it           with Espruino on ESP32 (node id: 5c73c132610cc44e5e2cc062), which can only send http requests unfortunately.
 - be fully responsive, even for mobiles with small screens.
 - will add sessions, you stay logged in unless you log out.
-- if node was not updated for 30 days, will be deleted.
+- node will be automatically deleted if not updated for 30 days.
 - ect.
 
 How to use:
