@@ -4,6 +4,7 @@ Probably the easyest way to go online with your IoT
 On Readnow you would be able to create your individual page, where you can send and display data easily. This can be done with HTTP requests, both with PUT(recomended) and POST.
 
 Online demo: http://readnow.vulkanclub.tech/
+Webapp is not optimise for mobile phones with small screen (comming soon).
 
 How to use:
 
@@ -22,7 +23,8 @@ That’s it, no need to register.
 
 Now when everything is seted up, you can test and send values to your node using your id.
 Proper way to update a value would be to make a PUT (or POST) requiest on http://readnow.vulkanclub.tech/postValue and send JSON like so:
-{
+
+```{
     "title": "Tunnel project",
     "pos1param": {
         "name": "Temperature",
@@ -41,7 +43,7 @@ Proper way to update a value would be to make a PUT (or POST) requiest on http:/
      },
      "id": "5c73c132610cc44e5e2cc062"
 }
-
+```
 With every request you can change title, names, extensions or even add or remove the whole entry (e.g. pos2param).
 You Can't change the password. It throws an error if you try.
 
