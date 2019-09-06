@@ -21,7 +21,7 @@ Enter Title of your project. Add one or more parameters (like Temperature, humid
 
 ![](screenshots/Screenshot_nodeview_Readnow.png)
 
-You now created your project node. Your node was assigned an id wich you see on top right corner. Later you can use that id to log in into your node page, so copy and save it now please.
+You now created your project node. The id which you see on top right corner was assigned to your node. Later you can use that id to log in to your node page, so copy and save it now please.
 That’s it, no need to register.
 
 
