@@ -24,7 +24,7 @@ class CreateNode extends React.Component {
 
   createNodeOnServerAndGetIt = async () => {
     let { inputs, ...clone} = this.state
-    const result = await axios("http://readnow.vulkanclub.tech/postNode", {
+    const result = await axios("http://localhost:3000/postNode", {
       method: "post",
       data: { ...clone },
       withCredentials: true

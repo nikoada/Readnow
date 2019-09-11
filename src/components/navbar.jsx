@@ -11,7 +11,7 @@ export default class Navigation extends Component {
   getDataFromServer = async () => {
     try {
       const response = await axios.get(
-        "http://readnow.vulkanclub.tech/getNode/" + this.state.id,
+        "http://localhost:3000/getNode/" + this.state.id,
         {
           crossdomain: true
         }
