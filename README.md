@@ -3,10 +3,8 @@ Probably the easiest way to go online with your IoT
 
 On Readnow you would be able to create your personal page, where you can send and display data easily. This can be done with HTTP requests, both with PUT(recommended) and POST.
 
-Online demo: http://readnow.vulkanclub.tech/
-
 Coming soon:
-- webapp will be on https as soon as I get microcontroller which is able to send https requests. At the moment I'm testing it           with Espruino on ESP32 (node id: 5c73c132610cc44e5e2cc062), which can only send http requests unfortunately.
+
 - be fully responsive, even for mobiles with small screens.
 - will add sessions, you stay logged in unless you log out.
 - node will be automatically deleted if not updated for 30 days.
